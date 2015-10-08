@@ -1,0 +1,98 @@
+title: android dumsys
+date: 2015-10-08 16:17:32
+tags:
+---
+
+  SurfaceFlinger
+  accessibility
+  account
+  activity
+  alarm
+  android.security.keystore
+  appops
+  appwidget
+  assetatlas
+  assetredirection
+  audio
+  backup
+  battery
+  batterypropreg
+  batterystats
+  bluetooth_manager
+  clipboard
+  cneservice
+  com.broadcom.nfc.Factory
+  com.vzw.nfc.AidFilter
+  commontime_management
+  connectivity
+  consumer_ir
+  content
+  country_detector
+  cpuinfo
+  dbinfo
+  device_policy
+  devicestoragemonitor
+  diskstats
+  display
+  display.qservice
+  dreams
+  drm.drmManager
+  dropbox
+  entropy
+  gfxinfo
+  hardware
+  icon
+  input
+  input_method
+  iphonesubinfo
+  isms
+  location
+  lock_settings
+  media.audio_flinger
+  media.audio_policy
+  media.camera
+  media.player
+  media_router
+  meminfo
+  mount
+  netpolicy
+  netstats
+  network_management
+  nfc
+  notification
+  package
+  performance.adj
+  permission
+  phone
+  power
+  print
+  procstats
+  samplingprofiler
+  scheduling_policy
+  search
+  sensorservice
+  serial
+  servicediscovery
+  simphonebook
+  sip
+  statusbar
+  telephony.registry
+  textservices
+  uimode
+  updatelock
+  usagestats
+  usb
+  user
+  vibrator
+  wallpaper
+  wifi
+  wifip2p
+  window
+
+ex: 
+
+```bash
+adb shell dumpsys activity services
+or
+adb shell dumpsys window
+```
