@@ -1,6 +1,6 @@
 title: android dumsys
 date: 2015-10-08 16:17:32
-tags:
+tags: android
 ---
 
   SurfaceFlinger
