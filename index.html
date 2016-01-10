@@ -61,6 +61,85 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-awk-sed" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/01/10/awk-sed/" class="article-date">
+  <time datetime="2016-01-10T04:17:25.000Z" itemprop="datePublished">2016-01-10</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/01/10/awk-sed/">awk sed</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>86451|{“language”:[{“name”:”java”,”version_name”:7}, {“name”:”c”,”version_name”:8}, {“name”:”python”,”version_name”:2}],”level”:42,”time”:1452008786167,”board”:”aaaa”}<br>86451|{“language”:[{“name”:”java”,”version_name”:7}, {“name”:”c”,”version_name”:8}, {“name”:”python”,”version_name”:2}],”level”:42,”time”:1452008786167,”board”:”bbbb”}</p>
+<p>for board in “aaaa” “bbbb”<br>do<br>    echo $board<br>    cat $1 | sed -n “/$board/p” | awk -F ‘\|{‘ ‘{print “{\”number\”:”$1 “,” $2}’ | jq ‘{number, time, board, language : .language[]}’ | jq ‘[.number, .time, .board, .language.name, .language.version<em>name]’ -c &gt; ${1}</em>$board<br>done</p>
+<p>sed <a href="http://coolshell.cn/articles/9104.html" target="_blank" rel="external">原文地址</a><br>sed -n “/s/p” 　输入匹配行<br>在sed中引入shell变量 sed “s/$a/$b/“ filename</p>
+<p>awk <a href="http://coolshell.cn/articles/9070.html" target="_blank" rel="external">原文地址</a></p>
+<p>起步上台<br>我从netstat命令中提取了如下信息作为用例：</p>
+<p>$ cat netstat.txt<br>Proto Recv-Q Send-Q Local-Address          Foreign-Address             State<br>tcp        0      0 0.0.0.0:3306           0.0.0.0:<em>                   LISTEN<br>tcp        0      0 0.0.0.0:80             0.0.0.0:</em>                   LISTEN<br>tcp        0      0 127.0.0.1:9000         0.0.0.0:<em>                   LISTEN<br>tcp        0      0 coolshell.cn:80        124.205.5.146:18245         TIME_WAIT<br>tcp        0      0 coolshell.cn:80        61.140.101.185:37538        FIN_WAIT2<br>tcp        0      0 coolshell.cn:80        110.194.134.189:1032        ESTABLISHED<br>tcp        0      0 coolshell.cn:80        123.169.124.111:49809       ESTABLISHED<br>tcp        0      0 coolshell.cn:80        116.234.127.77:11502        FIN_WAIT2<br>tcp        0      0 coolshell.cn:80        123.169.124.111:49829       ESTABLISHED<br>tcp        0      0 coolshell.cn:80        183.60.215.36:36970         TIME_WAIT<br>tcp        0   4166 coolshell.cn:80        61.148.242.38:30901         ESTABLISHED<br>tcp        0      1 coolshell.cn:80        124.152.181.209:26825       FIN_WAIT1<br>tcp        0      0 coolshell.cn:80        110.194.134.189:4796        ESTABLISHED<br>tcp        0      0 coolshell.cn:80        183.60.212.163:51082        TIME_WAIT<br>tcp        0      1 coolshell.cn:80        208.115.113.92:50601        LAST_ACK<br>tcp        0      0 coolshell.cn:80        123.169.124.111:49840       ESTABLISHED<br>tcp        0      0 coolshell.cn:80        117.136.20.85:50025         FIN_WAIT2<br>tcp        0      0 :::22                  :::</em>                        LISTEN<br>下面是最简单最常用的awk示例，其输出第1列和第4例，</p>
+<p>其中单引号中的被大括号括着的就是awk的语句，注意，其只能被单引号包含。<br>其中的$1..$n表示第几例。注：$0表示整个行。</p>
+<p>$ awk ‘{print $1, $4}’ netstat.txt<br>Proto Local-Address<br>tcp 0.0.0.0:3306<br>tcp 0.0.0.0:80<br>tcp 127.0.0.1:9000<br>tcp coolshell.cn:80<br>tcp coolshell.cn:80<br>tcp coolshell.cn:80<br>tcp coolshell.cn:80<br>tcp coolshell.cn:80<br>tcp coolshell.cn:80<br>tcp coolshell.cn:80<br>tcp coolshell.cn:80<br>tcp coolshell.cn:80<br>tcp coolshell.cn:80<br>tcp coolshell.cn:80<br>tcp coolshell.cn:80<br>tcp coolshell.cn:80<br>tcp coolshell.cn:80<br>tcp :::22<br>我们再来看看awk的格式化输出，和C语言的printf没什么两样：</p>
+<p>$ awk ‘{printf “%-8s %-8s %-8s %-18s %-22s %-15s\n”,$1,$2,$3,$4,$5,$6}’ netstat.txt<br>Proto    Recv-Q   Send-Q   Local-Address      Foreign-Address        State<br>tcp      0        0        0.0.0.0:3306       0.0.0.0:<em>              LISTEN<br>tcp      0        0        0.0.0.0:80         0.0.0.0:</em>              LISTEN<br>tcp      0        0        127.0.0.1:9000     0.0.0.0:<em>              LISTEN<br>tcp      0        0        coolshell.cn:80    124.205.5.146:18245    TIME_WAIT<br>tcp      0        0        coolshell.cn:80    61.140.101.185:37538   FIN_WAIT2<br>tcp      0        0        coolshell.cn:80    110.194.134.189:1032   ESTABLISHED<br>tcp      0        0        coolshell.cn:80    123.169.124.111:49809  ESTABLISHED<br>tcp      0        0        coolshell.cn:80    116.234.127.77:11502   FIN_WAIT2<br>tcp      0        0        coolshell.cn:80    123.169.124.111:49829  ESTABLISHED<br>tcp      0        0        coolshell.cn:80    183.60.215.36:36970    TIME_WAIT<br>tcp      0        4166     coolshell.cn:80    61.148.242.38:30901    ESTABLISHED<br>tcp      0        1        coolshell.cn:80    124.152.181.209:26825  FIN_WAIT1<br>tcp      0        0        coolshell.cn:80    110.194.134.189:4796   ESTABLISHED<br>tcp      0        0        coolshell.cn:80    183.60.212.163:51082   TIME_WAIT<br>tcp      0        1        coolshell.cn:80    208.115.113.92:50601   LAST_ACK<br>tcp      0        0        coolshell.cn:80    123.169.124.111:49840  ESTABLISHED<br>tcp      0        0        coolshell.cn:80    117.136.20.85:50025    FIN_WAIT2<br>tcp      0        0        :::22              :::</em>                   LISTEN<br>脱掉外套<br>过滤记录<br>我们再来看看如何过滤记录（下面过滤条件为：第三列的值为0 &amp;&amp; 第6列的值为LISTEN）</p>
+<p>$ awk ‘$3==0 &amp;&amp; $6==”LISTEN” ‘ netstat.txt<br>tcp        0      0 0.0.0.0:3306               0.0.0.0:<em>              LISTEN<br>tcp        0      0 0.0.0.0:80                 0.0.0.0:</em>              LISTEN<br>tcp        0      0 127.0.0.1:9000             0.0.0.0:<em>              LISTEN<br>tcp        0      0 :::22                      :::</em>                   LISTEN<br>其中的“==”为比较运算符。其他比较运算符：!=, &gt;, &lt;, &gt;=, &lt;=</p>
+<p>我们来看看各种过滤记录的方式：</p>
+<p>$ awk ‘ $3&gt;0 {print $0}’ netstat.txt<br>Proto Recv-Q Send-Q Local-Address          Foreign-Address             State<br>tcp        0   4166 coolshell.cn:80        61.148.242.38:30901         ESTABLISHED<br>tcp        0      1 coolshell.cn:80        124.152.181.209:26825       FIN_WAIT1<br>tcp        0      1 coolshell.cn:80        208.115.113.92:50601        LAST_ACK<br>如果我们需要表头的话，我们可以引入内建变量NR：</p>
+<p>$ awk ‘$3==0 &amp;&amp; $6==”LISTEN” || NR==1 ‘ netstat.txt<br>Proto Recv-Q Send-Q Local-Address          Foreign-Address             State<br>tcp        0      0 0.0.0.0:3306           0.0.0.0:<em>                   LISTEN<br>tcp        0      0 0.0.0.0:80             0.0.0.0:</em>                   LISTEN<br>tcp        0      0 127.0.0.1:9000         0.0.0.0:<em>                   LISTEN<br>tcp        0      0 :::22                  :::</em>                        LISTEN<br>再加上格式化输出：</p>
+<p>$ awk ‘$3==0 &amp;&amp; $6==”LISTEN” || NR==1 {printf “%-20s %-20s %s\n”,$4,$5,$6}’ netstat.txt<br>Local-Address        Foreign-Address      State<br>0.0.0.0:3306         0.0.0.0:<em>            LISTEN<br>0.0.0.0:80           0.0.0.0:</em>            LISTEN<br>127.0.0.1:9000       0.0.0.0:<em>            LISTEN<br>:::22                :::</em>                 LISTEN<br>内建变量<br>说到了内建变量，我们可以来看看awk的一些内建变量：</p>
+<p>$0  当前记录（这个变量中存放着整个行的内容）<br>$1~$n   当前记录的第n个字段，字段间由FS分隔<br>FS  输入字段分隔符 默认是空格或Tab<br>NF  当前记录中的字段个数，就是有多少列<br>NR  已经读出的记录数，就是行号，从1开始，如果有多个文件话，这个值也是不断累加中。<br>FNR 当前记录数，与NR不同的是，这个值会是各个文件自己的行号<br>RS  输入的记录分隔符， 默认为换行符<br>OFS 输出字段分隔符， 默认也是空格<br>ORS 输出的记录分隔符，默认为换行符<br>FILENAME    当前输入文件的名字<br>怎么使用呢，比如：我们如果要输出行号：</p>
+<p>$ awk ‘$3==0 &amp;&amp; $6==”ESTABLISHED” || NR==1 {printf “%02s %s %-20s %-20s %s\n”,NR, FNR, $4,$5,$6}’ netstat.txt<br>01 1 Local-Address        Foreign-Address      State<br>07 7 coolshell.cn:80      110.194.134.189:1032 ESTABLISHED<br>08 8 coolshell.cn:80      123.169.124.111:49809 ESTABLISHED<br>10 10 coolshell.cn:80      123.169.124.111:49829 ESTABLISHED<br>14 14 coolshell.cn:80      110.194.134.189:4796 ESTABLISHED<br>17 17 coolshell.cn:80      123.169.124.111:49840 ESTABLISHED<br>指定分隔符<br>$  awk  ‘BEGIN{FS=”:”} {print $1,$3,$6}’ /etc/passwd<br>root 0 /root<br>bin 1 /bin<br>daemon 2 /sbin<br>adm 3 /var/adm<br>lp 4 /var/spool/lpd<br>sync 5 /sbin<br>shutdown 6 /sbin<br>halt 7 /sbin<br>上面的命令也等价于：（-F的意思就是指定分隔符）</p>
+<p>$ awk  -F: ‘{print $1,$3,$6}’ /etc/passwd<br>注：如果你要指定多个分隔符，你可以这样来：</p>
+<p>awk -F ‘[;:]’<br>再来看一个以\t作为分隔符输出的例子（下面使用了/etc/passwd文件，这个文件是以:分隔的）：</p>
+<p>$ awk  -F: ‘{print $1,$3,$6}’ OFS=”\t” /etc/passwd<br>root    0       /root<br>bin     1       /bin<br>daemon  2       /sbin<br>adm     3       /var/adm<br>lp      4       /var/spool/lpd<br>sync    5       /sbin<br>脱掉衬衫<br>字符串匹配<br>我们再来看几个字符串匹配的示例：<br>$ awk ‘$6 ~ /FIN/ || NR==1 {print NR,$4,$5,$6}’ OFS=”\t” netstat.txt<br>1       Local-Address   Foreign-Address State<br>6       coolshell.cn:80 61.140.101.185:37538    FIN_WAIT2<br>9       coolshell.cn:80 116.234.127.77:11502    FIN_WAIT2<br>13      coolshell.cn:80 124.152.181.209:26825   FIN_WAIT1<br>18      coolshell.cn:80 117.136.20.85:50025     FIN_WAIT2</p>
+<p>$ $ awk ‘$6 ~ /WAIT/ || NR==1 {print NR,$4,$5,$6}’ OFS=”\t” netstat.txt<br>1       Local-Address   Foreign-Address State<br>5       coolshell.cn:80 124.205.5.146:18245     TIME_WAIT<br>6       coolshell.cn:80 61.140.101.185:37538    FIN_WAIT2<br>9       coolshell.cn:80 116.234.127.77:11502    FIN_WAIT2<br>11      coolshell.cn:80 183.60.215.36:36970     TIME_WAIT<br>13      coolshell.cn:80 124.152.181.209:26825   FIN_WAIT1<br>15      coolshell.cn:80 183.60.212.163:51082    TIME_WAIT<br>18      coolshell.cn:80 117.136.20.85:50025     FIN_WAIT2<br>上面的第一个示例匹配FIN状态， 第二个示例匹配WAIT字样的状态。其实 ~ 表示模式开始。/ /中是模式。这就是一个正则表达式的匹配。</p>
+<p>其实awk可以像grep一样的去匹配第一行，就像这样：<br>$ awk ‘/LISTEN/‘ netstat.txt<br>tcp        0      0 0.0.0.0:3306            0.0.0.0:<em>               LISTEN<br>tcp        0      0 0.0.0.0:80              0.0.0.0:</em>               LISTEN<br>tcp        0      0 127.0.0.1:9000          0.0.0.0:<em>               LISTEN<br>tcp        0      0 :::22                   :::</em>                    LISTEN<br>我们可以使用 “/FIN|TIME/” 来匹配 FIN 或者 TIME :<br>$ awk ‘$6 ~ /FIN|TIME/ || NR==1 {print NR,$4,$5,$6}’ OFS=”\t” netstat.txt<br>1       Local-Address   Foreign-Address State<br>5       coolshell.cn:80 124.205.5.146:18245     TIME_WAIT<br>6       coolshell.cn:80 61.140.101.185:37538    FIN_WAIT2<br>9       coolshell.cn:80 116.234.127.77:11502    FIN_WAIT2<br>11      coolshell.cn:80 183.60.215.36:36970     TIME_WAIT<br>13      coolshell.cn:80 124.152.181.209:26825   FIN_WAIT1<br>15      coolshell.cn:80 183.60.212.163:51082    TIME_WAIT<br>18      coolshell.cn:80 117.136.20.85:50025     FIN_WAIT2<br>再来看看模式取反的例子：<br>$ awk ‘$6 !~ /WAIT/ || NR==1 {print NR,$4,$5,$6}’ OFS=”\t” netstat.txt<br>1       Local-Address   Foreign-Address State<br>2       0.0.0.0:3306    0.0.0.0:<em>       LISTEN<br>3       0.0.0.0:80      0.0.0.0:</em>       LISTEN<br>4       127.0.0.1:9000  0.0.0.0:<em>       LISTEN<br>7       coolshell.cn:80 110.194.134.189:1032    ESTABLISHED<br>8       coolshell.cn:80 123.169.124.111:49809   ESTABLISHED<br>10      coolshell.cn:80 123.169.124.111:49829   ESTABLISHED<br>12      coolshell.cn:80 61.148.242.38:30901     ESTABLISHED<br>14      coolshell.cn:80 110.194.134.189:4796    ESTABLISHED<br>16      coolshell.cn:80 208.115.113.92:50601    LAST_ACK<br>17      coolshell.cn:80 123.169.124.111:49840   ESTABLISHED<br>19      :::22   :::</em>    LISTEN<br>或是：</p>
+<p>awk ‘!/WAIT/‘ netstat.txt<br>折分文件</p>
+<p>awk拆分文件很简单，使用重定向就好了。下面这个例子，是按第6例分隔文件，相当的简单（其中的NR!=1表示不处理表头）。<br>$ awk ‘NR!=1{print &gt; $6}’ netstat.txt</p>
+<p>$ cat score.txt<br>Marry   2143 78 84 77<br>Jack    2321 66 78 45<br>Tom     2122 48 77 71<br>Mike    2537 87 97 95<br>Bob     2415 40 57 62<br>我们的awk脚本如下（我没有写有命令行上是因为命令行上不易读，另外也在介绍另一种用法）：</p>
+<p>$ cat cal.awk</p>
+<p>#!/bin/awk -f</p>
+<p>#运行前<br>BEGIN {<br>    math = 0<br>    english = 0<br>    computer = 0</p>
+<pre><code>printf &quot;NAME    NO.   MATH  ENGLISH  COMPUTER   TOTAL\n&quot;
+printf &quot;---------------------------------------------\n&quot;
+</code></pre><p>}</p>
+<p>#运行中<br>{<br>    math+=$3<br>    english+=$4<br>    computer+=$5<br>    printf “%-6s %-6s %4d %8d %8d %8d\n”, $1, $2, $3,$4,$5, $3+$4+$5<br>}</p>
+<p>#运行后<br>END {<br>    printf “———————————————\n”<br>    printf “  TOTAL:%10d %8d %8d \n”, math, english, computer<br>    printf “AVERAGE:%10.2f %8.2f %8.2f\n”, math/NR, english/NR, computer/NR<br>}<br>我们来看一下执行结果：（也可以这样运行 ./cal.awk score.txt）</p>
+<p>$ awk -f cal.awk score.txt</p>
+<h2 id="NAME_NO-_MATH_ENGLISH_COMPUTER_TOTAL"><a href="#NAME_NO-_MATH_ENGLISH_COMPUTER_TOTAL" class="headerlink" title="NAME    NO.   MATH  ENGLISH  COMPUTER   TOTAL"></a>NAME    NO.   MATH  ENGLISH  COMPUTER   TOTAL</h2><p>Marry  2143     78       84       77      239<br>Jack   2321     66       78       45      189<br>Tom    2122     48       77       71      196<br>Mike   2537     87       97       95      279</p>
+<h2 id="Bob_2415_40_57_62_159"><a href="#Bob_2415_40_57_62_159" class="headerlink" title="Bob    2415     40       57       62      159"></a>Bob    2415     40       57       62      159</h2><p>  TOTAL:       319      393      350<br>AVERAGE:     63.80    78.60    70.00<br>环境变量<br>即然说到了脚本，我们来看看怎么和环境变量交互：（使用-v参数和ENVIRON，使用ENVIRON的环境变量需要export）</p>
+<p>$ x=5<br>$ y=10<br>$ export y<br>$ echo $x $y<br>5 10</p>
+<p>$ awk -v val=$x ‘{print $1, $2, $3, $4+val, $5+ENVIRON[“y”]}’ OFS=”\t” score.txt<br>Marry   2143    78      89      87<br>Jack    2321    66      83      55<br>Tom     2122    48      82      81<br>Mike    2537    87      102     105<br>Bob     2415    40      62      72<br>几个花活<br>最后，我们再来看几个小例子：</p>
+<p>#从file文件中找出长度大于80的行<br>awk ‘length&gt;80’ file</p>
+<p>#按连接数查看客户端IP<br>netstat -ntu | awk ‘{print $5}’ | cut -d: -f1 | sort | uniq -c | sort -nr</p>
+<p>#打印99乘法表<br>seq 9 | sed ‘H;g’ | awk -v RS=’’ ‘{for(i=1;i&lt;=NF;i++)printf(“%dx%d=%d%s”, i, NR, i*NR, i==NR?”\n”:”\t”)}’<br>自己撸吧<br>关于其中的一些知识点可以参看gawk的手册：</p>
+<p><a href="http://www.gnu.org/software/gawk/manual/gawk.html#Built_002din-Variables" target="_blank" rel="external">内建变量</a><br><a href="http://www.gnu.org/software/gawk/manual/gawk.html#Statements" target="_blank" rel="external">流控方面</a><br><a href="http://www.gnu.org/software/gawk/manual/gawk.html#Built_002din" target="_blank" rel="external">内建函数</a><br><a href="http://www.gnu.org/software/gawk/manual/gawk.html#Regexp" target="_blank" rel="external">正则表达式</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/01/10/awk-sed/" data-id="cij816k6j000646nm9jm7d6eb" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/unix/">unix</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-Android-start-Process" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2016/01/10/Android-start-Process/" class="article-date">
@@ -99,7 +178,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/01/10/Android-start-Process/" data-id="cij80v0f20008w0nmtyhnt23c" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/01/10/Android-start-Process/" data-id="cij816k6r000b46nm7a3uju5h" class="article-share-link">Share</a>
       
       
     </footer>
@@ -165,7 +244,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/01/10/Android-Zygote-systemServer/" data-id="cij80v0f40009w0nmba3dq82a" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/01/10/Android-Zygote-systemServer/" data-id="cij816k6u000c46nmbgukh0dv" class="article-share-link">Share</a>
       
       
     </footer>
@@ -202,7 +281,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/10/15/git/" data-id="cij80v0ev0005w0nm21ob0wd4" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/10/15/git/" data-id="cij816k6f000546nmisdltl7b" class="article-share-link">Share</a>
       
       
     </footer>
@@ -240,7 +319,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/10/08/idea-keymap/" data-id="cij80v0eg0000w0nmi8aqgbyh" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/10/08/idea-keymap/" data-id="cij816k5o000046nmokx05hqq" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android/">android</a></li></ul>
@@ -281,7 +360,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/10/08/android-dumsys/" data-id="cij80v0ey0006w0nm3sjyokon" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/10/08/android-dumsys/" data-id="cij816k6o000946nm9yg8xaxj" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android/">android</a></li></ul>
@@ -337,7 +416,7 @@ $ git push origin <span class="built_in">source</span>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/10/01/hexo-and-github-page/" data-id="cij80v0eq0003w0nmfvjzn87h" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/10/01/hexo-and-github-page/" data-id="cij816k66000346nmsjvns3c7" class="article-share-link">Share</a>
       
       
     </footer>
@@ -382,7 +461,7 @@ $ git push origin <span class="built_in">source</span>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/10/01/hello-world/" data-id="cij80v0es0004w0nmeedosiw9" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/10/01/hello-world/" data-id="cij816k6a000446nmx9ay3zq5" class="article-share-link">Share</a>
       
       
     </footer>
@@ -403,7 +482,7 @@ $ git push origin <span class="built_in">source</span>
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/android/">android</a><span class="tag-list-count">2</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/android/">android</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/unix/">unix</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -412,7 +491,7 @@ $ git push origin <span class="built_in">source</span>
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/android/" style="font-size: 10px;">android</a>
+      <a href="/tags/android/" style="font-size: 20px;">android</a> <a href="/tags/unix/" style="font-size: 10px;">unix</a>
     </div>
   </div>
 
@@ -421,7 +500,7 @@ $ git push origin <span class="built_in">source</span>
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">October 2015</a><span class="archive-list-count">5</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">October 2015</a><span class="archive-list-count">5</span></li></ul>
     </div>
   </div>
 
@@ -431,6 +510,10 @@ $ git push origin <span class="built_in">source</span>
     <h3 class="widget-title">Recents</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2016/01/10/awk-sed/">awk sed</a>
+          </li>
         
           <li>
             <a href="/2016/01/10/Android-start-Process/">Android start Process</a>
@@ -446,10 +529,6 @@ $ git push origin <span class="built_in">source</span>
         
           <li>
             <a href="/2015/10/08/idea-keymap/">容易忘掉的idea-keyma</a>
-          </li>
-        
-          <li>
-            <a href="/2015/10/08/android-dumsys/">android dumsys</a>
           </li>
         
       </ul>
