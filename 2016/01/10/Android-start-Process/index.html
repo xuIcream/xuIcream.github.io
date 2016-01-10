@@ -3,17 +3,21 @@
 <head>
   <meta charset="utf-8">
   
-  <title>lele &amp; bangbang</title>
+  <title>Android start Process | lele &amp; bangbang</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description">
-<meta property="og:type" content="website">
-<meta property="og:title" content="lele & bangbang">
-<meta property="og:url" content="http://yoursite.com/index.html">
+  <meta name="description" content="Android应用启动流程参考老罗Android应用程序启动过程源代码分析Android应用程序框架层创建的应用程序进程具有两个特点，一是进程的入口函数是ActivityThread.main，二是进程天然支持Binder进程间通信机制因为Android应用程序进程在创建的时候就已经启动了一个线程池来支持Server组件
+frameworks/base/services/core/java/com">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android start Process">
+<meta property="og:url" content="http://yoursite.com/2016/01/10/Android-start-Process/index.html">
 <meta property="og:site_name" content="lele & bangbang">
-<meta property="og:description">
+<meta property="og:description" content="Android应用启动流程参考老罗Android应用程序启动过程源代码分析Android应用程序框架层创建的应用程序进程具有两个特点，一是进程的入口函数是ActivityThread.main，二是进程天然支持Binder进程间通信机制因为Android应用程序进程在创建的时候就已经启动了一个线程池来支持Server组件
+frameworks/base/services/core/java/com">
+<meta property="og:updated_time" content="2016-01-10T04:08:24.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="lele & bangbang">
-<meta name="twitter:description">
+<meta name="twitter:title" content="Android start Process">
+<meta name="twitter:description" content="Android应用启动流程参考老罗Android应用程序启动过程源代码分析Android应用程序框架层创建的应用程序进程具有两个特点，一是进程的入口函数是ActivityThread.main，二是进程天然支持Binder进程间通信机制因为Android应用程序进程在创建的时候就已经启动了一个线程池来支持Server组件
+frameworks/base/services/core/java/com">
   
     <link rel="alternative" href="/atom.xml" title="lele &amp; bangbang" type="application/atom+xml">
   
@@ -59,9 +63,7 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-    <article id="post-Android-start-Process" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-Android-start-Process" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2016/01/10/Android-start-Process/" class="article-date">
   <time datetime="2016-01-10T04:07:33.000Z" itemprop="datePublished">2016-01-10</time>
@@ -74,8 +76,8 @@
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/01/10/Android-start-Process/">Android start Process</a>
+    <h1 class="article-title" itemprop="name">
+      Android start Process
     </h1>
   
 
@@ -105,294 +107,20 @@
     </footer>
   </div>
   
-</article>
-
-
+    
+<nav id="article-nav">
   
-    <article id="post-Android-Zygote-systemServer" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/01/10/Android-Zygote-systemServer/" class="article-date">
-  <time datetime="2016-01-10T03:49:39.000Z" itemprop="datePublished">2016-01-10</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/01/10/Android-Zygote-systemServer/">Android Zygote systemServer</a>
-    </h1>
+    <a href="/2016/01/10/Android-Zygote-systemServer/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Android Zygote systemServer</div>
+    </a>
   
+</nav>
 
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="Zygote_SystemServer_u542F_u52A8"><a href="#Zygote_SystemServer_u542F_u52A8" class="headerlink" title="Zygote SystemServer启动"></a>Zygote SystemServer启动</h3><p>主要参考老罗的博客．<a href="http://blog.csdn.net/luoshengyang/article/details/6768304" target="_blank" rel="external">原文地址</a><br>在android系统中,所有的应用程序进程及系统服务进程SystemServer都是由Zygote而来,从名字中就可以发现android 万物来自Zygote.</p>
-<p>Android基于Linux内核,所有进程都是init进程的子进程,都是fork出来的,Zygote也不例外,<br>Zygote也是由init进程创建.</p>
-<p>system/core/rootdir/init.rc<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">import /init.$&#123;ro.zygote&#125;.rc</span><br></pre></td></tr></table></figure></p>
-<p>system/core/rootdir/init.zygote64.rc<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">service zygote /system/bin/app_process </span><br><span class="line">-Xzygote /system/bin --zygote --start-system-server</span><br><span class="line">    class main</span><br><span class="line">    socket zygote stream <span class="number">660</span> root system</span><br><span class="line">    onrestart write /sys/android_power/request_state wake</span><br><span class="line">    onrestart write /sys/power/state on</span><br><span class="line">    onrestart restart media</span><br><span class="line">    onrestart restart netd</span><br><span class="line">    onrestart restart surfaceflinger</span><br></pre></td></tr></table></figure></p>
-<p>service告诉init进程创建一个名为”zygote”的进程，这个zygote进程要执行的程序是/system/bin/app_process.cpp<br>(init进程的源代码位于system/core/init目录中，在init.c文件中由service_start函数解释init.rc文件中的service命令)</p>
-<p>frameworks/base/cmds/app_process/app_main.cpp<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>* <span class="keyword">const</span> argv[])</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (zygote) &#123;</span><br><span class="line">        runtime.start(<span class="string">"com.android.internal.os.ZygoteInit"</span>, args, zygote);</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (className) &#123;</span><br><span class="line">        runtime.start(<span class="string">"com.android.internal.os.RuntimeInit"</span>, args, zygote);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="built_in">fprintf</span>(<span class="built_in">stderr</span>, <span class="string">"Error: no class name or --zygote supplied.\n"</span>);</span><br><span class="line">        app_usage();</span><br><span class="line">        LOG_ALWAYS_FATAL(<span class="string">"app_process: no class name or --zygote supplied."</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">10</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>参数zygote 为true,调用<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">runtime.start(<span class="string">"com.android.internal.os.ZygoteInit"</span>, args, zygote);</span><br></pre></td></tr></table></figure></p>
-<p>这里的runtime为AppRuntime继承 AndroidRuntime,start方法没有覆写,位于父类<br>frameworks/base/core/jni/AndroidRuntime.cpp<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> AndroidRuntime::start(<span class="keyword">const</span> <span class="keyword">char</span>* className, <span class="keyword">const</span> Vector&lt;String8&gt;&amp; options, <span class="keyword">bool</span> zygote)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">static</span> <span class="keyword">const</span> String8 <span class="title">startSystemServer</span><span class="params">(<span class="string">"start-system-server"</span>)</span></span>;</span><br><span class="line">    JniInvocation jni_invocation;</span><br><span class="line">    jni_invocation.Init(<span class="literal">NULL</span>);</span><br><span class="line">    JNIEnv* env;</span><br><span class="line">    <span class="keyword">if</span> (startVm(&amp;mJavaVM, &amp;env, zygote) != <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    onVmCreated(env);</span><br><span class="line"></span><br><span class="line">    <span class="comment">/*</span><br><span class="line">     * Register android functions.</span><br><span class="line">     */</span></span><br><span class="line">    <span class="keyword">if</span> (startReg(env) &lt; <span class="number">0</span>) &#123;</span><br><span class="line">        ALOGE(<span class="string">"Unable to register all android natives\n"</span>);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">char</span>* slashClassName = toSlashClassName(className);</span><br><span class="line">    jclass startClass = env-&gt;FindClass(slashClassName);</span><br><span class="line">    <span class="keyword">if</span> (startClass == <span class="literal">NULL</span>) &#123;</span><br><span class="line">        ALOGE(<span class="string">"JavaVM unable to locate class '%s'\n"</span>, slashClassName);</span><br><span class="line">        <span class="comment">/* keep going */</span></span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        jmethodID startMeth = env-&gt;GetStaticMethodID(startClass, <span class="string">"main"</span>,</span><br><span class="line">            <span class="string">"([Ljava/lang/String;)V"</span>);</span><br><span class="line">        <span class="keyword">if</span> (startMeth == <span class="literal">NULL</span>) &#123;</span><br><span class="line">            ALOGE(<span class="string">"JavaVM unable to find main() in '%s'\n"</span>, className);</span><br><span class="line">            <span class="comment">/* keep going */</span></span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            env-&gt;CallStaticVoidMethod(startClass, startMeth, strArray);</span><br><span class="line">            <span class="keyword">if</span> (env-&gt;ExceptionCheck())</span><br><span class="line">                threadExitUncaughtException(env);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">free</span>(slashClassName);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>start函数主要调用三个方法:<br>１：startVM启动虚拟机<br>２：startReg注册JNI方法<br>３：调用com.android.internal.os.ZygoteInit类的main函数</p>
-<p>frameworks/base/core/java/com/android/internal/os/ZygoteInit.java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String argv[])</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            registerZygoteSocket(socketName);</span><br><span class="line">            gc();</span><br><span class="line">            <span class="keyword">if</span> (startSystemServer) &#123;</span><br><span class="line">                startSystemServer(abiList, socketName);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">boolean</span> disableNonCoreServices = SystemProperties.getBoolean(<span class="string">"config.disable_noncore"</span>, <span class="keyword">false</span>);</span><br><span class="line">            <span class="keyword">boolean</span> disableAtlas = SystemProperties.getBoolean(<span class="string">"config.disable_atlas"</span>, <span class="keyword">false</span>);</span><br><span class="line">            <span class="keyword">if</span> (!disableNonCoreServices &amp;&amp; !disableAtlas &amp;&amp; startSystemServer) &#123;</span><br><span class="line">                startAtlasService();</span><br><span class="line">            &#125;</span><br><span class="line">            runSelectLoop(abiList, startSystemServer);</span><br><span class="line">            closeServerSocket();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (MethodAndArgsCaller caller) &#123;</span><br><span class="line">            caller.run();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (RuntimeException ex) &#123;</span><br><span class="line">            Log.e(TAG, <span class="string">"Zygote died with exception"</span>, ex);</span><br><span class="line">            closeServerSocket();</span><br><span class="line">            <span class="keyword">throw</span> ex;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>这里主要调用三个方法:<br>１：registerZygoteSocket 创建了一个socket接口，用来和ActivityManagerService通讯<br>２：startSystemServer 启动SystemServer组件<br>３：runSelectLoop 等待ActivityManagerService请求创建新的应用程序进程</p>
-<p>主要分析startSystemServer相关流程<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">boolean</span> <span class="title">startSystemServer</span><span class="params">(String abiList, String socketName)</span></span><br><span class="line">            <span class="keyword">throws</span> MethodAndArgsCaller, RuntimeException </span>&#123;</span><br><span class="line">        <span class="comment">/* Hardcoded command line to start the system server */</span></span><br><span class="line">        String args[] = &#123;</span><br><span class="line">            <span class="string">"--setuid=1000"</span>,</span><br><span class="line">            <span class="string">"--setgid=1000"</span>,</span><br><span class="line">            <span class="string">"--setgroups=1001,1002,1003,1004,1005,1006,1007,1008,1009,1010,1018,1021,1032,3001,3002,3003,3006,3007"</span>,</span><br><span class="line">            <span class="string">"--capabilities="</span> + capabilities + <span class="string">","</span> + capabilities,</span><br><span class="line">            <span class="string">"--runtime-init"</span>,</span><br><span class="line">            <span class="string">"--nice-name=system_server"</span>,</span><br><span class="line">            <span class="string">"com.android.server.SystemServer"</span>,</span><br><span class="line">        &#125;;</span><br><span class="line">        ZygoteConnection.Arguments parsedArgs = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">int</span> pid;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            parsedArgs = <span class="keyword">new</span> ZygoteConnection.Arguments(args);</span><br><span class="line">            ZygoteConnection.applyDebuggerSystemProperty(parsedArgs);</span><br><span class="line">            ZygoteConnection.applyInvokeWithSystemProperty(parsedArgs);</span><br><span class="line">            <span class="comment">/* Request to fork the system server process */</span></span><br><span class="line">            pid = Zygote.forkSystemServer(</span><br><span class="line">                    parsedArgs.uid, parsedArgs.gid,</span><br><span class="line">                    parsedArgs.gids,</span><br><span class="line">                    parsedArgs.debugFlags,</span><br><span class="line">                    <span class="keyword">null</span>,</span><br><span class="line">                    parsedArgs.permittedCapabilities,</span><br><span class="line">                    parsedArgs.effectiveCapabilities);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IllegalArgumentException ex) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(ex);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">/* For child process */</span></span><br><span class="line">        <span class="keyword">if</span> (pid == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (hasSecondZygote(abiList)) &#123;</span><br><span class="line">                waitForSecondaryZygote(socketName);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            handleSystemServerProcess(parsedArgs);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
-<p>frameworks/base/core/java/com/android/internal/os/Zygote.java<br>Zygote.forkSystemServer　<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">forkSystemServer</span><span class="params">(<span class="keyword">int</span> uid, <span class="keyword">int</span> gid, <span class="keyword">int</span>[] gids, <span class="keyword">int</span> debugFlags,</span><br><span class="line">            <span class="keyword">int</span>[][] rlimits, <span class="keyword">long</span> permittedCapabilities, <span class="keyword">long</span> effectiveCapabilities)</span> </span>&#123;</span><br><span class="line">        VM_HOOKS.preFork();</span><br><span class="line">        <span class="keyword">int</span> pid = nativeForkSystemServer(</span><br><span class="line">                uid, gid, gids, debugFlags, rlimits, permittedCapabilities, effectiveCapabilities);</span><br><span class="line">        VM_HOOKS.postForkCommon();</span><br><span class="line">        <span class="keyword">return</span> pid;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>在子进程中pid为零，所以调用handleSystemServerProcess<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">handleSystemServerProcess</span><span class="params">(</span><br><span class="line">            ZygoteConnection.Arguments parsedArgs)</span></span><br><span class="line">            <span class="keyword">throws</span> ZygoteInit.MethodAndArgsCaller </span>&#123;</span><br><span class="line">        RuntimeInit.zygoteInit(parsedArgs.remainingArgs);    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>调用到RuntimeInit.zygoteInit<br>frameworks/base/core/java/com/android/internal/os/RuntimeInit.java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">void</span> <span class="title">zygoteInit</span><span class="params">(<span class="keyword">int</span> targetSdkVersion, String[] argv, ClassLoader classLoader)</span></span><br><span class="line">            <span class="keyword">throws</span> ZygoteInit.MethodAndArgsCaller </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (DEBUG) Slog.d(TAG, <span class="string">"RuntimeInit: Starting application from zygote"</span>);</span><br><span class="line">        redirectLogStreams();</span><br><span class="line">        commonInit();</span><br><span class="line">        nativeZygoteInit();</span><br><span class="line">        applicationInit(targetSdkVersion, argv, classLoader);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
-<p>这里主要是调用两个函数</p>
-<p>１：nativeZygoteInit是一个Native函数，实现在AndroidRuntime nativeZygoteInit<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">com_android_internal_os_RuntimeInit_nativeZygoteInit</span><span class="params">(JNIEnv* env, jobject clazz)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    gCurRuntime-&gt;onZygoteInit();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>而gCurRuntime的实际类型未AppRumtime<br>frameworks/base/cmds/app_process/app_main.cpp<br><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">onZygoteInit</span><span class="params">()</span></span><br><span class="line">    </span>&#123;</span><br><span class="line">        <span class="comment">// Re-enable tracing now that we're no longer in Zygote.</span></span><br><span class="line">        atrace_set_tracing_enabled(<span class="literal">true</span>);</span><br><span class="line">        sp&lt;ProcessState&gt; proc = ProcessState::self();</span><br><span class="line">        ALOGV(<span class="string">"App process: starting thread pool.\n"</span>);</span><br><span class="line">        proc-&gt;startThreadPool();</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
-<p>ProcessState::startThreadPool启动线程池，这个线程池是用来和Binder驱动交互，<br>Binder进程间通信机制基础设施就准备好了</p>
-<p>２：applicationInit<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">applicationInit</span><span class="params">(<span class="keyword">int</span> targetSdkVersion, String[] argv, ClassLoader classLoader)</span></span><br><span class="line">            <span class="keyword">throws</span> ZygoteInit.MethodAndArgsCaller </span>&#123;</span><br><span class="line">        <span class="comment">// We want to be fairly aggressive about heap utilization, to avoid</span></span><br><span class="line">        <span class="comment">// holding on to a lot of memory that isn't needed.</span></span><br><span class="line">        VMRuntime.getRuntime().setTargetHeapUtilization(<span class="number">0.75f</span>);</span><br><span class="line">        VMRuntime.getRuntime().setTargetSdkVersion(targetSdkVersion);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">final</span> Arguments args;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            args = <span class="keyword">new</span> Arguments(argv);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IllegalArgumentException ex) &#123;</span><br><span class="line">            Slog.e(TAG, ex.getMessage());</span><br><span class="line">            <span class="comment">// let the process exit</span></span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Remaining arguments are passed to the start class's static main</span></span><br><span class="line">        invokeStaticMain(args.startClass, args.startArgs, classLoader);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>通过invokeStaticMain走进SystemServer　main函数<br>frameworks/base/services/java/com/android/server/SystemServer.java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        SystemProperties.set(<span class="string">"persist.sys.dalvik.vm.lib"</span>,</span><br><span class="line">                             VMRuntime.getRuntime().vmLibrary());</span><br><span class="line">        <span class="comment">// Mmmmmm... more memory!</span></span><br><span class="line">        dalvik.system.VMRuntime.getRuntime().clearGrowthLimit();</span><br><span class="line">        System.loadLibrary(<span class="string">"android_servers"</span>);</span><br><span class="line">        Slog.i(TAG, <span class="string">"Entered the Android system server!"</span>);</span><br><span class="line">        <span class="comment">// Initialize native services.</span></span><br><span class="line">        nativeInit();</span><br><span class="line">        <span class="comment">// This used to be its own separate thread, but now it is</span></span><br><span class="line">        <span class="comment">// just the loop we run on the main thread.</span></span><br><span class="line">        ServerThread thr = <span class="keyword">new</span> ServerThread();</span><br><span class="line">        thr.initAndLoop();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>在ServerThread线程中执行一些系统关键服务的启动操作如　ActivieyManagerServices PackageManagerServices</p>
-<ol>
-<li><p>系统启动时init进程会创建Zygote进程，Zygote进程负责后续Android应用程序框架层的其它进程的创建和启动工作。</p>
-</li>
-<li><p>Zygote进程会首先创建一个SystemServer进程，SystemServer进程负责启动系统的关键服务，如包管理服务PackageManagerService和应用程序组件管理服务ActivityManagerService。</p>
-</li>
-<li><p>当我们需要启动一个Android应用程序时，ActivityManagerService会通过Socket进程间通信机制，通知Zygote进程为这个应用程序创建一个新的进程。</p>
-</li>
-</ol>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/01/10/Android-Zygote-systemServer/" data-id="cij80v0f40009w0nmba3dq82a" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
   
 </article>
 
-
-  
-    <article id="post-git" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2015/10/15/git/" class="article-date">
-  <time datetime="2015-10-15T03:09:28.000Z" itemprop="datePublished">2015-10-15</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/10/15/git/">git</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>git很好用的一个工具  git diffAll可以显示该git仓库下所有文件的更改对比<br><a href="https://github.com/thenigan/git-diffall" target="_blank" rel="external">github仓库</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/10/15/git/" data-id="cij80v0ev0005w0nm21ob0wd4" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-idea-keymap" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2015/10/08/idea-keymap/" class="article-date">
-  <time datetime="2015-10-08T12:26:28.000Z" itemprop="datePublished">2015-10-08</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/10/08/idea-keymap/">容易忘掉的idea-keyma</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>F2 快速高亮定位错误或警告<br>代码标签输入完成后，按Tab，会自动生成代码, 如输入”fori”后按tab, for (User user:users) { … } 需要输入 users.for 再按tab就行了<br>选中文本，按Ctrl+Shift+F7, 高亮显示所有该文本，按Esc高亮消失。<br>ctrl 加 + 号展开res资源<br>ctrl+shirf+f7<br>ctrl + delete<br>ctrl + shift + delete<br>Ctrl + Shift + I: quick definition<br>像Eclipse那样快速跳出括号<br>Keymap-&gt;Editor Actions-&gt;Complete Current Statement：默认是Ctrl+Shift+Enter；Shift+Enter则不管现在光标在哪个位置,直接新开一行<br>Date birthday = user.getBirthday()<br>只需要输入 user.getBirthday().var 再按tab就行了, IDEA会自动推断赋值类型和生成默认的变量名称。<br>ctrl + alt  + h<br>重构一切: Ctrl+Shift+Alt+T<br>crtl + f6: change signature<br>shirt + f6: rename<br>ALT + 7:  strus</p>
-<p>settings -&gt; code style -&gt; java -&gt; code generation -&gt; name prefix</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/10/08/idea-keymap/" data-id="cij80v0eg0000w0nmi8aqgbyh" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android/">android</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-android-dumsys" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2015/10/08/android-dumsys/" class="article-date">
-  <time datetime="2015-10-08T08:17:32.000Z" itemprop="datePublished">2015-10-08</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/10/08/android-dumsys/">android dumsys</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>  SurfaceFlinger<br>  accessibility<br>  account<br>  activity<br>  alarm<br>  android.security.keystore<br>  appops<br>  appwidget<br>  assetatlas<br>  assetredirection<br>  audio<br>  backup<br>  battery<br>  batterypropreg<br>  batterystats<br>  bluetooth_manager<br>  clipboard<br>  cneservice<br>  com.broadcom.nfc.Factory<br>  com.vzw.nfc.AidFilter<br>  commontime_management<br>  connectivity<br>  consumer_ir<br>  content<br>  country_detector<br>  cpuinfo<br>  dbinfo<br>  device_policy<br>  devicestoragemonitor<br>  diskstats<br>  display<br>  display.qservice<br>  dreams<br>  drm.drmManager<br>  dropbox<br>  entropy<br>  gfxinfo<br>  hardware<br>  icon<br>  input<br>  input_method<br>  iphonesubinfo<br>  isms<br>  location<br>  lock_settings<br>  media.audio_flinger<br>  media.audio_policy<br>  media.camera<br>  media.player<br>  media_router<br>  meminfo<br>  mount<br>  netpolicy<br>  netstats<br>  network_management<br>  nfc<br>  notification<br>  package<br>  performance.adj<br>  permission<br>  phone<br>  power<br>  print<br>  procstats<br>  samplingprofiler<br>  scheduling_policy<br>  search<br>  sensorservice<br>  serial<br>  servicediscovery<br>  simphonebook<br>  sip<br>  statusbar<br>  telephony.registry<br>  textservices<br>  uimode<br>  updatelock<br>  usagestats<br>  usb<br>  user<br>  vibrator<br>  wallpaper<br>  wifi<br>  wifip2p<br>  window</p>
-<p>ex: </p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">adb shell dumpsys activity services</span><br><span class="line">or</span><br><span class="line">adb shell dumpsys window</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/10/08/android-dumsys/" data-id="cij80v0ey0006w0nm3sjyokon" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android/">android</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-hexo-and-github-page" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2015/10/01/hexo-and-github-page/" class="article-date">
-  <time datetime="2015-10-01T08:44:08.000Z" itemprop="datePublished">2015-10-01</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/10/01/hexo-and-github-page/">hexo and github page</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="u5229_u7528github_page__u548C_hexo__u642D_u5EFA_u81EA_u5DF1_u7684_u535A_u5BA2"><a href="#u5229_u7528github_page__u548C_hexo__u642D_u5EFA_u81EA_u5DF1_u7684_u535A_u5BA2" class="headerlink" title="利用github page 和 hexo 搭建自己的博客"></a>利用github page 和 hexo 搭建自己的博客</h3><h6 id="u4E3B_u8981_u8BB0_u4E0B_u81EA_u5DF1_u7684_u6392_u96F7_u8FC7_u7A0B"><a href="#u4E3B_u8981_u8BB0_u4E0B_u81EA_u5DF1_u7684_u6392_u96F7_u8FC7_u7A0B" class="headerlink" title="主要记下自己的排雷过程"></a>主要记下自己的排雷过程</h6><h5 id="github_page"><a href="#github_page" class="headerlink" title="github page"></a>github page</h5><p>注册<a href="https://github.com/" target="_blank" rel="external">gitbug</a>账号，创建一个名字为username.github.io的新仓库，配置<a href="https://help.github.com/articles/generating-ssh-keys/" target="_blank" rel="external">ssh</a></p>
-<h4 id="hexo"><a href="#hexo" class="headerlink" title="hexo"></a>hexo</h4><p>安装<a href="https://hexo.io/docs/" target="_blank" rel="external">hexo</a><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ hexo init blog</span><br><span class="line">$ <span class="built_in">cd</span> blog</span><br><span class="line">$ npm install</span><br></pre></td></tr></table></figure></p>
-<p>在Hexo 3.0版本后还需要单独安装hexo git，安装命令为: npm install hexo-deployer-git –save ,安装完成后执行会在当前目录下生成blog的文件夹，此目录即为你的博客生成基地了。<br>由于hexo与传统的博客托管网站不同的一点是博客的源文件是保存在本地的，<br>为了以后能够方便的在多台终端上使用，我们可以把源文件同步到github仓库中的新建分支中， 执行如下命令，把源文件提交到 username.github.io的source（新chekout的分支）仓库中</p>
-<pre><code class="bash">$ <span class="built_in">cd</span> blog
-$ git init
-$ git checkout -b <span class="built_in">source</span>
-$ git add .
-$ git commit -m <span class="string">"first commit"</span>
-$ git remote add origin git@github.com:username:username.github.io.git
-$ git push origin <span class="built_in">source</span>
-</code></pre>
-<p>修改全局配置文件 _config.yml， 找到<a href="/">deploy</a>修改<br>deploy:<br>  type: git<br>  repository: git@github.com:username/username.github.io.git<br>  branch: master</p>
-<h5 id="u5DE5_u4F5C_u5C31_u7EEA_uFF0C_u5F00_u59CB_u5199_u535A_u5BA2"><a href="#u5DE5_u4F5C_u5C31_u7EEA_uFF0C_u5F00_u59CB_u5199_u535A_u5BA2" class="headerlink" title="工作就绪，开始写博客"></a>工作就绪，开始写博客</h5><pre><code class="bash">hexo new “New Post<span class="string">"（文章的title）</span>
-</code></pre>
-<p>会在source/_posts下新建New Post.md的文件，编辑该文件，<br>执行</p>
-<pre><code class="bash">hexo d -g
-</code></pre>
-<p>发布到github page 上</p>
-<h5 id="u5728_u6D4F_u89C8_u5668_u4E2D__u8F93_u5165username-github-io__u67E5_u770B"><a href="#u5728_u6D4F_u89C8_u5668_u4E2D__u8F93_u5165username-github-io__u67E5_u770B" class="headerlink" title="在浏览器中 输入username.github.io 查看"></a>在浏览器中 输入username.github.io 查看</h5>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/10/01/hexo-and-github-page/" data-id="cij80v0eq0003w0nmfvjzn87h" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2015/10/01/hello-world/" class="article-date">
-  <time datetime="2015-10-01T08:17:32.000Z" itemprop="datePublished">2015-10-01</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/10/01/hello-world/">Hello World</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Welcome to <a href="http://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="http://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="http://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick_Start"><a href="#Quick_Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create_a_new_post"><a href="#Create_a_new_post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run_server"><a href="#Run_server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate_static_files"><a href="#Generate_static_files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy_to_remote_sites"><a href="#Deploy_to_remote_sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/10/01/hello-world/" data-id="cij80v0es0004w0nmeedosiw9" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-  
 </section>
         
           <aside id="sidebar">
