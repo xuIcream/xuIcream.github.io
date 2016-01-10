@@ -3,17 +3,21 @@
 <head>
   <meta charset="utf-8">
   
-  <title>lele &amp; bangbang</title>
+  <title>Android Zygote systemServer | lele &amp; bangbang</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description">
-<meta property="og:type" content="website">
-<meta property="og:title" content="lele & bangbang">
-<meta property="og:url" content="http://yoursite.com/index.html">
+  <meta name="description" content="Android应用启动流程参考老罗Android应用程序启动过程源代码分析Android应用程序框架层创建的应用程序进程具有两个特点，一是进程的入口函数是ActivityThread.main，二是进程天然支持Binder进程间通信机制因为Android应用程序进程在创建的时候就已经启动了一个线程池来支持Server组件
+frameworks/base/services/core/java/com">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android Zygote systemServer">
+<meta property="og:url" content="http://yoursite.com/2016/01/10/Android-Zygote-systemServer/index.html">
 <meta property="og:site_name" content="lele & bangbang">
-<meta property="og:description">
+<meta property="og:description" content="Android应用启动流程参考老罗Android应用程序启动过程源代码分析Android应用程序框架层创建的应用程序进程具有两个特点，一是进程的入口函数是ActivityThread.main，二是进程天然支持Binder进程间通信机制因为Android应用程序进程在创建的时候就已经启动了一个线程池来支持Server组件
+frameworks/base/services/core/java/com">
+<meta property="og:updated_time" content="2016-01-10T04:00:26.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="lele & bangbang">
-<meta name="twitter:description">
+<meta name="twitter:title" content="Android Zygote systemServer">
+<meta name="twitter:description" content="Android应用启动流程参考老罗Android应用程序启动过程源代码分析Android应用程序框架层创建的应用程序进程具有两个特点，一是进程的入口函数是ActivityThread.main，二是进程天然支持Binder进程间通信机制因为Android应用程序进程在创建的时候就已经启动了一个线程池来支持Server组件
+frameworks/base/services/core/java/com">
   
     <link rel="alternative" href="/atom.xml" title="lele &amp; bangbang" type="application/atom+xml">
   
@@ -59,9 +63,7 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-    <article id="post-Android-Zygote-systemServer" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-Android-Zygote-systemServer" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2016/01/10/Android-Zygote-systemServer/" class="article-date">
   <time datetime="2016-01-10T03:49:39.000Z" itemprop="datePublished">2016-01-10</time>
@@ -74,8 +76,8 @@
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/01/10/Android-Zygote-systemServer/">Android Zygote systemServer</a>
+    <h1 class="article-title" itemprop="name">
+      Android Zygote systemServer
     </h1>
   
 
@@ -105,228 +107,20 @@
     </footer>
   </div>
   
-</article>
-
-
+    
+<nav id="article-nav">
   
-    <article id="post-git" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2015/10/15/git/" class="article-date">
-  <time datetime="2015-10-15T03:09:28.000Z" itemprop="datePublished">2015-10-15</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/10/15/git/">git</a>
-    </h1>
+    <a href="/2015/10/15/git/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">git</div>
+    </a>
   
+</nav>
 
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>git很好用的一个工具  git diffAll可以显示该git仓库下所有文件的更改对比<br><a href="https://github.com/thenigan/git-diffall" target="_blank" rel="external">github仓库</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/10/15/git/" data-id="cij80j1y30005kcnm7ybda08n" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
   
 </article>
 
-
-  
-    <article id="post-idea-keymap" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2015/10/08/idea-keymap/" class="article-date">
-  <time datetime="2015-10-08T12:26:28.000Z" itemprop="datePublished">2015-10-08</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/10/08/idea-keymap/">容易忘掉的idea-keyma</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>F2 快速高亮定位错误或警告<br>代码标签输入完成后，按Tab，会自动生成代码, 如输入”fori”后按tab, for (User user:users) { … } 需要输入 users.for 再按tab就行了<br>选中文本，按Ctrl+Shift+F7, 高亮显示所有该文本，按Esc高亮消失。<br>ctrl 加 + 号展开res资源<br>ctrl+shirf+f7<br>ctrl + delete<br>ctrl + shift + delete<br>Ctrl + Shift + I: quick definition<br>像Eclipse那样快速跳出括号<br>Keymap-&gt;Editor Actions-&gt;Complete Current Statement：默认是Ctrl+Shift+Enter；Shift+Enter则不管现在光标在哪个位置,直接新开一行<br>Date birthday = user.getBirthday()<br>只需要输入 user.getBirthday().var 再按tab就行了, IDEA会自动推断赋值类型和生成默认的变量名称。<br>ctrl + alt  + h<br>重构一切: Ctrl+Shift+Alt+T<br>crtl + f6: change signature<br>shirt + f6: rename<br>ALT + 7:  strus</p>
-<p>settings -&gt; code style -&gt; java -&gt; code generation -&gt; name prefix</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/10/08/idea-keymap/" data-id="cij80j1xn0000kcnm6jqjkzea" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android/">android</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-android-dumsys" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2015/10/08/android-dumsys/" class="article-date">
-  <time datetime="2015-10-08T08:17:32.000Z" itemprop="datePublished">2015-10-08</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/10/08/android-dumsys/">android dumsys</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>  SurfaceFlinger<br>  accessibility<br>  account<br>  activity<br>  alarm<br>  android.security.keystore<br>  appops<br>  appwidget<br>  assetatlas<br>  assetredirection<br>  audio<br>  backup<br>  battery<br>  batterypropreg<br>  batterystats<br>  bluetooth_manager<br>  clipboard<br>  cneservice<br>  com.broadcom.nfc.Factory<br>  com.vzw.nfc.AidFilter<br>  commontime_management<br>  connectivity<br>  consumer_ir<br>  content<br>  country_detector<br>  cpuinfo<br>  dbinfo<br>  device_policy<br>  devicestoragemonitor<br>  diskstats<br>  display<br>  display.qservice<br>  dreams<br>  drm.drmManager<br>  dropbox<br>  entropy<br>  gfxinfo<br>  hardware<br>  icon<br>  input<br>  input_method<br>  iphonesubinfo<br>  isms<br>  location<br>  lock_settings<br>  media.audio_flinger<br>  media.audio_policy<br>  media.camera<br>  media.player<br>  media_router<br>  meminfo<br>  mount<br>  netpolicy<br>  netstats<br>  network_management<br>  nfc<br>  notification<br>  package<br>  performance.adj<br>  permission<br>  phone<br>  power<br>  print<br>  procstats<br>  samplingprofiler<br>  scheduling_policy<br>  search<br>  sensorservice<br>  serial<br>  servicediscovery<br>  simphonebook<br>  sip<br>  statusbar<br>  telephony.registry<br>  textservices<br>  uimode<br>  updatelock<br>  usagestats<br>  usb<br>  user<br>  vibrator<br>  wallpaper<br>  wifi<br>  wifip2p<br>  window</p>
-<p>ex: </p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">adb shell dumpsys activity services</span><br><span class="line">or</span><br><span class="line">adb shell dumpsys window</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/10/08/android-dumsys/" data-id="cij80j1y50006kcnmkmwlcvym" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android/">android</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-hexo-and-github-page" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2015/10/01/hexo-and-github-page/" class="article-date">
-  <time datetime="2015-10-01T08:44:08.000Z" itemprop="datePublished">2015-10-01</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/10/01/hexo-and-github-page/">hexo and github page</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="u5229_u7528github_page__u548C_hexo__u642D_u5EFA_u81EA_u5DF1_u7684_u535A_u5BA2"><a href="#u5229_u7528github_page__u548C_hexo__u642D_u5EFA_u81EA_u5DF1_u7684_u535A_u5BA2" class="headerlink" title="利用github page 和 hexo 搭建自己的博客"></a>利用github page 和 hexo 搭建自己的博客</h3><h6 id="u4E3B_u8981_u8BB0_u4E0B_u81EA_u5DF1_u7684_u6392_u96F7_u8FC7_u7A0B"><a href="#u4E3B_u8981_u8BB0_u4E0B_u81EA_u5DF1_u7684_u6392_u96F7_u8FC7_u7A0B" class="headerlink" title="主要记下自己的排雷过程"></a>主要记下自己的排雷过程</h6><h5 id="github_page"><a href="#github_page" class="headerlink" title="github page"></a>github page</h5><p>注册<a href="https://github.com/" target="_blank" rel="external">gitbug</a>账号，创建一个名字为username.github.io的新仓库，配置<a href="https://help.github.com/articles/generating-ssh-keys/" target="_blank" rel="external">ssh</a></p>
-<h4 id="hexo"><a href="#hexo" class="headerlink" title="hexo"></a>hexo</h4><p>安装<a href="https://hexo.io/docs/" target="_blank" rel="external">hexo</a><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ hexo init blog</span><br><span class="line">$ <span class="built_in">cd</span> blog</span><br><span class="line">$ npm install</span><br></pre></td></tr></table></figure></p>
-<p>在Hexo 3.0版本后还需要单独安装hexo git，安装命令为: npm install hexo-deployer-git –save ,安装完成后执行会在当前目录下生成blog的文件夹，此目录即为你的博客生成基地了。<br>由于hexo与传统的博客托管网站不同的一点是博客的源文件是保存在本地的，<br>为了以后能够方便的在多台终端上使用，我们可以把源文件同步到github仓库中的新建分支中， 执行如下命令，把源文件提交到 username.github.io的source（新chekout的分支）仓库中</p>
-<pre><code class="bash">$ <span class="built_in">cd</span> blog
-$ git init
-$ git checkout -b <span class="built_in">source</span>
-$ git add .
-$ git commit -m <span class="string">"first commit"</span>
-$ git remote add origin git@github.com:username:username.github.io.git
-$ git push origin <span class="built_in">source</span>
-</code></pre>
-<p>修改全局配置文件 _config.yml， 找到<a href="/">deploy</a>修改<br>deploy:<br>  type: git<br>  repository: git@github.com:username/username.github.io.git<br>  branch: master</p>
-<h5 id="u5DE5_u4F5C_u5C31_u7EEA_uFF0C_u5F00_u59CB_u5199_u535A_u5BA2"><a href="#u5DE5_u4F5C_u5C31_u7EEA_uFF0C_u5F00_u59CB_u5199_u535A_u5BA2" class="headerlink" title="工作就绪，开始写博客"></a>工作就绪，开始写博客</h5><pre><code class="bash">hexo new “New Post<span class="string">"（文章的title）</span>
-</code></pre>
-<p>会在source/_posts下新建New Post.md的文件，编辑该文件，<br>执行</p>
-<pre><code class="bash">hexo d -g
-</code></pre>
-<p>发布到github page 上</p>
-<h5 id="u5728_u6D4F_u89C8_u5668_u4E2D__u8F93_u5165username-github-io__u67E5_u770B"><a href="#u5728_u6D4F_u89C8_u5668_u4E2D__u8F93_u5165username-github-io__u67E5_u770B" class="headerlink" title="在浏览器中 输入username.github.io 查看"></a>在浏览器中 输入username.github.io 查看</h5>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/10/01/hexo-and-github-page/" data-id="cij80j1xx0003kcnmnpy13lm8" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2015/10/01/hello-world/" class="article-date">
-  <time datetime="2015-10-01T08:17:32.000Z" itemprop="datePublished">2015-10-01</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/10/01/hello-world/">Hello World</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Welcome to <a href="http://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="http://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="http://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick_Start"><a href="#Quick_Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create_a_new_post"><a href="#Create_a_new_post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run_server"><a href="#Run_server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate_static_files"><a href="#Generate_static_files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy_to_remote_sites"><a href="#Deploy_to_remote_sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/10/01/hello-world/" data-id="cij80j1y00004kcnmahk3jhv4" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-  
 </section>
         
           <aside id="sidebar">
